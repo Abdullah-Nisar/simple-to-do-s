@@ -56,33 +56,25 @@ class _PlanScreenState extends State<PlanScreen> {
     return ListView.builder(
       controller: scrollController,
       itemCount: plan.tasks.length,
-      itemBuilder: (context, index) => _buildTaskTile(plan.tasks, index),
+      itemBuilder: (context, index) => _buildTaskTile(plan.tasks[index]),
     );
   }
 
-  Widget _buildTaskTile(List tasks, int index) {
+  Widget _buildTaskTile(Task task) {
     return ListTile(
       leading: Checkbox(
-        value: tasks[index].complete,
+        value: task.complete,
         onChanged: (selected) {
           setState(() {
-            tasks[index].complete = selected!;
+            task.complete = selected!;
           });
         },
       ),
       title: TextField(onChanged: (text) {
         setState(() {
-          tasks[index].description = text;
+          task.description = text;
         });
       }),
-      trailing: GestureDetector(
-        child: Icon(Icons.arrow_forward_ios),
-        onTap: () {
-          setState(() {
-            tasks.remove(tasks[index]);
-          });
-        },
-      ),
     );
   }
 }
